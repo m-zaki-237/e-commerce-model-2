@@ -1,5 +1,5 @@
 import User from '../model/User.model.js'
-
+import jwt from 'jsonwebtoken'
 export const signup = async (req,res) =>{
     try {
         const {name,email,password} = req.body
@@ -27,10 +27,11 @@ export const login = async (req,res) => {
         if(!user || password !== user.password){
             return res.status(400).json({message:"Invalid user"})
         }else{
-            res.status(201).json({message:"Login Successful",user:{
-                name:user.name, 
-                email:user.email
-            }})
+            const token = jwt.sign({id:user._id, name: user.name, email: user.email},
+                "Secret",
+                {expiresIn : '10m'}
+            )
+            res.status(201).json({message:"Login Successful",token})
         }
     } catch (error) {
         console.log("Error:" + error.message);

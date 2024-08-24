@@ -3,6 +3,7 @@ import LoginImg from '../assets/images/docImg.jpg'
 import {Link, useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+
 export const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -12,8 +13,10 @@ export const Login = () => {
   const user = {email,password}
   const submitForm = async () => {
     try {
-      await axios.post("http://localhost:8000/user/login",user)
-      localStorage.setItem('user', JSON.stringify({ email, password }));
+      const response = await axios.post("http://localhost:8000/user/login",user)
+      const { token } = response.data
+      console.log(token);
+      localStorage.setItem('user', JSON.stringify({ token }));
       toast.success("Login Successful")
       navigate("/doctors")
     } catch (error) {
