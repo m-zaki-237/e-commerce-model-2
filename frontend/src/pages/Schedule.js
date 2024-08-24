@@ -9,6 +9,8 @@ export const Schedule = () => {
     const [cardNumber, setCardNumber] = useState("")
     const [expiryDate, setExpiryDate] = useState("")
     const [cvv, setCvv] = useState("")
+    const [appointmentDate, setAppointmentDate] = useState("") 
+    const [price] = useState(100)
 
     const { id } = useParams()
     console.log('Doctor ID from URL:', id)
@@ -18,12 +20,13 @@ export const Schedule = () => {
     const navigate = useNavigate()
 
     const Paynow = () => {
-        if (!email || !cardNumber || !expiryDate || !cvv) {
+        if (!email || !cardNumber || !expiryDate || !cvv || !appointmentDate) {
             toast.error("Please fill in all fields")
-            return
+        }else{
+
+            toast.success("Appointment Scheduled")
+            navigate("/")
         }
-        toast.success("Appointment Scheduled")
-        navigate("/")
     }
 
     return (
@@ -54,9 +57,9 @@ export const Schedule = () => {
                                 <div className="space-y-2">
                                     <label htmlFor="email" className="block text-sm font-medium text-gray-600">Email Address</label>
                                     <input
-                                    target={email}
+                                    value={email}
                                     onChange={(e)=>setEmail(e.target.value)}
-                                    required
+                                    
                                         type="email"
                                         id="email"
                                         placeholder="Enter your email"
@@ -67,9 +70,9 @@ export const Schedule = () => {
                                 <div className="space-y-2">
                                     <label htmlFor="cardNumber" className="block text-sm font-medium text-gray-600">Card Number</label>
                                     <input
-                                    target={cardNumber}
+                                    value={cardNumber}
                                     onChange={(e)=>setCardNumber(e.target.value)}
-                                    required
+                                    
                                         type="text"
                                         id="cardNumber"
                                         placeholder="1234 5678 9012 3456"
@@ -81,9 +84,9 @@ export const Schedule = () => {
                                     <div className="flex-1 space-y-2">
                                         <label htmlFor="expiryDate" className="block text-sm font-medium text-gray-600">Expiration Date</label>
                                         <input
-                                        target={expiryDate}
+                                        value={expiryDate}
                                         onChange={(e)=>setExpiryDate(e.target.value)}
-                                        required
+                                        
                                             type="text"
                                             id="expiryDate"
                                             placeholder="MM/YY"
@@ -93,9 +96,9 @@ export const Schedule = () => {
                                     <div className="flex-1 space-y-2">
                                         <label htmlFor="cvv" className="block text-sm font-medium text-gray-600">CVV</label>
                                         <input
-                                        target={cvv}
+                                        value={cvv}
                                         onChange={(e)=>setCvv(e.target.value)}
-                                        required
+                                        
                                             type="text"
                                             id="cvv"
                                             placeholder="123"
@@ -103,6 +106,30 @@ export const Schedule = () => {
                                         />
                                     </div>
                                 </div>
+
+                               
+                                <div className="space-y-2">
+                                    <label htmlFor="appointmentDate" className="block text-sm font-medium text-gray-600">Appointment Date</label>
+                                    <input
+                                    value={appointmentDate}
+                                    onChange={(e)=>setAppointmentDate(e.target.value)}
+                                        type="date"
+                                        id="appointmentDate"
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-md outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                                    />
+                                </div>
+
+                                
+                                <div className="space-y-2">
+                                    <label htmlFor="price" className="block text-sm font-medium text-gray-600">Price</label>
+                                    <input
+                                        value={`$${price}`} // Display the price
+                                        readOnly
+                                        id="price"
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-md outline-none bg-gray-100 text-gray-500"
+                                    />
+                                </div>
+
                                 <button
                                     onClick={Paynow}
                                     type="submit"
@@ -111,8 +138,6 @@ export const Schedule = () => {
                                     Pay Now
                                 </button>
                             </div>
-
-
                         </form>
                     </div>
                 </div>

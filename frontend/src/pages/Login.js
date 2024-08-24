@@ -18,6 +18,9 @@ export const Login = () => {
       console.log(token);
       localStorage.setItem('user', JSON.stringify({ token }));
       toast.success("Login Successful")
+      setTimeout(()=>{
+        window.location.reload()
+      },100)
       navigate("/doctors")
     } catch (error) {
       toast.error("Login Failed")
